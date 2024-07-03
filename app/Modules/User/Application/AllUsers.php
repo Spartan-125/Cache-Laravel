@@ -3,7 +3,9 @@
 namespace App\Modules\User\Application;
 
 use App\Modules\User\Domain\UserRepositoryInterface;
+use App\Modules\User\Infraestructure\UserRedisRepository;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as SupportCollection;
 
 class AllUsers
 {
@@ -11,10 +13,10 @@ class AllUsers
 
     public function __construct(UserRepositoryInterface $repository)
     {
-        $this->repository = $repository;
+        $this->repository = new UserRedisRepository($repository);
     }
 
-    public function get() : Collection
+    public function get() : Collection | SupportCollection
     {
         return $this->repository->getAllUsers();
     }

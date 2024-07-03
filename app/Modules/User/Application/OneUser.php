@@ -4,6 +4,7 @@ namespace App\Modules\User\Application;
 
 use App\Models\User;
 use App\Modules\User\Domain\UserRepositoryInterface;
+use App\Modules\User\Infraestructure\UserRedisRepository;
 
 class OneUser
 {
@@ -11,7 +12,7 @@ class OneUser
 
     public function __construct(UserRepositoryInterface $repository)
     {
-        $this->repository = $repository;
+        $this->repository = new UserRedisRepository($repository);
     }
 
     public function get() : User
